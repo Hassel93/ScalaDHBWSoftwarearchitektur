@@ -1,8 +1,13 @@
-import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.TreeSet
 
-object Primes {
-  var ts = TreeSet[Int]()
-  def isPrime(n: Int): Boolean = (2 to math.sqrt(n).toInt) forall (x => n % x != 0)
- 
+object Primes extends IsPrime{
+  val set = TreeSet[Int]()
+  
+  def add(addSet:IndexedSeq[Int]):Unit={
+    this.synchronized{
+      set ++= (addSet)
+    }
+  }
+  
+  
 }
