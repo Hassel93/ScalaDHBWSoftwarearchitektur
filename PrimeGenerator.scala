@@ -1,4 +1,3 @@
-import scala.concurrent.Future
 import scala.collection.parallel.immutable.ParRange
 
 

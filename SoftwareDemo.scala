@@ -4,23 +4,21 @@ import scala.util.{ Failure, Success }
 import scala.concurrent.Future._
 import io.StdIn._
 import scala.concurrent.duration._
-import scala.collection.mutable.TreeSet
-import scala.collection.mutable.ArrayBuffer
-import scala.concurrent.ExecutionContext
 import scala.io.Source
 import scala.collection.parallel.immutable.ParRange
-import scala.concurrent.Awaitable
+import scala.collection.Seq
 
-object HelloWorld {
+object SoftwareDemo {
   def main(args: Array[String]): Unit = {
 
     //Nur zum zeigen der Nebenläufigkeit
     println("Start")
 
+ 
     val starter = 1
     val ender = 10000000
 
-    val mode = 6
+    val mode = 5
 
     val choosefunction = mode match {
       case 1 => ausführlich(starter, ender)
@@ -35,7 +33,7 @@ object HelloWorld {
       println(line)
     }
 
-    Await.ready(choosefunction, Duration.Inf)
+    Await.result(choosefunction, Duration.Inf)
 
     println("Ende")
   }
@@ -86,8 +84,7 @@ object HelloWorld {
         Future { Primes.add((ender / 4 * 2 + 1 + 1 to ender / 4 * 3).filter(p => Primes.isPrime(p))) },
         Future { Primes.add((ender / 4 * 3 + 1 to ender).filter(p => Primes.isPrime(p))) })).map(f => println(Primes.set.size))
   }
-  
-  
+
   def onboardScalaLoesungParrallel(starter: Int, ender: Int): Future[Unit] = {
     Future { (ParRange.apply(starter, ender, 1, true)).filter(p => Primes.isPrime(p)).toList.length }.map(f => println(f))
   }
